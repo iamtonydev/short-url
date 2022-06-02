@@ -1,0 +1,46 @@
+syntax = "proto3";
+
+package api.url_shortener_v1;
+
+option go_package = "github.com/iamtonydev/url-shortener/pkg/url_shortener_v1";
+
+import "google/api/annotations.proto";
+import "validate/validate.proto";
+
+service UrlShortenerV1 {
+  rpc AddShortUrl (AddShortUrlRequest) returns (AddShortUrlResponse) {
+    option (google.api.http) = {
+      post: "/urls/v1"
+      body: "*"
+    };
+  }
+  rpc GetUrl (GetUrlRequest) returns (GetUrlResponse) {
+    option (google.api.http) = {
+      get: "/urls/v1/{short_url}"
+    };
+  }
+}
+
+message AddShortUrlRequest {
+  string url = 1 [json_name = "url", (validate.rules).string.uri = true];
+}
+
+message AddShortUrlResponse {
+  message Result {
+    string short_url = 1;
+  }
+
+  Result result = 1;
+}
+
+message GetUrlRequest {
+  string short_url = 1 [json_name = "short_url", (validate.rules).string.len = 10];
+}
+
+message GetUrlResponse {
+  message Result {
+    string url = 1;
+  }
+
+  Result result = 1;
+}
