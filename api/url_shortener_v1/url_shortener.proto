@@ -10,13 +10,13 @@ import "validate/validate.proto";
 service UrlShortenerV1 {
   rpc AddShortUrl (AddShortUrlRequest) returns (AddShortUrlResponse) {
     option (google.api.http) = {
-      post: "/urls/v1"
+      post: "/urls/v1/add"
       body: "*"
     };
   }
   rpc GetUrl (GetUrlRequest) returns (GetUrlResponse) {
     option (google.api.http) = {
-      get: "/urls/v1/{short_url}"
+      get: "/{short_url}"
     };
   }
 }

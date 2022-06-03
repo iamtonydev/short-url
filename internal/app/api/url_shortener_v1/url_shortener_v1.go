@@ -18,3 +18,11 @@ func NewUrlShortenerV1(urlShortenerService *url_shortener.Service) *Implementati
 		urlShortenerService,
 	}
 }
+
+func newMockUrlShortenerV1(i Implementation) *Implementation {
+	return &Implementation{
+		desc.UnimplementedUrlShortenerV1Server{},
+
+		i.urlShortenerService,
+	}
+}
