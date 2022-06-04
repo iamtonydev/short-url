@@ -6,6 +6,7 @@
 ### Локальный запуск:
 
 * `git clone https://github.com/iamtonydev/url-shortener.git`
+* `cd url-shortener/`
 * `docker-compose up -d`
 
 При запуске создается 3 docker-контейнера. Для базы данных(postgres), приложения
