@@ -11,4 +11,3 @@ database :
   password : "postgres"
   database : "url_shortener"
   sslmode : "disable"
-  driver : "pgx"

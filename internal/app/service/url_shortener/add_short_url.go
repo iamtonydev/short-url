@@ -3,11 +3,14 @@ package url_shortener
 import (
 	"context"
 	"crypto/md5"
+	"strings"
 
 	"github.com/jxskiss/base62"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 )
+
+const prefix = "http://localhost:8000/"
 
 func (s *Service) AddShortUrl(ctx context.Context, url string) (string, error) {
 	hashBytes := md5.Sum([]byte(url))
@@ -24,13 +27,18 @@ func (s *Service) AddShortUrl(ctx context.Context, url string) (string, error) {
 			}
 
 			if s.urlsRepository.IsUrlDuplicateError(err) {
-				return "", status.Errorf(codes.InvalidArgument, "this url is already shortened")
+				return "", status.Errorf(codes.InvalidArgument, "this url is already shortened: %v", err.Error())
 			}
 
 			return "", err
 		}
 
-		return shortUrl, nil
+		var builder strings.Builder
+		builder.WriteString(prefix)
+		builder.WriteString(shortUrl)
+		res := builder.String()
+
+		return res, nil
 	}
 
 	return "", status.Errorf(codes.InvalidArgument, "can't shorten this url")

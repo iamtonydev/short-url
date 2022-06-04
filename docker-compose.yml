@@ -6,7 +6,7 @@ volumes:
 
 services:
   postgres:
-    build: ./third_party/docker_files/postgres
+    image: postgres:14-alpine3.15
     environment:
       POSTGRES_DB: "url_shortener"
       POSTGRES_USER: "postgres"
@@ -14,6 +14,14 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - postgres_volume:/var/lib/postgresql/data
+
+  goose:
+    build: ./migrations/
+    restart: on-failure
+    environment:
+      DB_HOST: postgres
+    ports:
+      - "5444:5432"
 
   app:
     build: .

@@ -31,7 +31,6 @@ func main() {
 	flag.Parse()
 
 	cfg, err = config.Read("config.yml")
-
 	if err != nil {
 		log.Fatal("failed to open configuration file")
 		return
@@ -69,7 +68,7 @@ func startGRPC(cfg *config.Config, useCustomStorage bool) error {
 			cfg.Database.Host, cfg.Database.Port, cfg.Database.User, cfg.Database.Password, cfg.Database.Name, cfg.Database.SslMode,
 		)
 
-		db, err := sqlx.Open(cfg.Database.Driver, dbDsn)
+		db, err := sqlx.Open("pgx", dbDsn)
 		if err != nil {
 			return fmt.Errorf("failed to open connection with db")
 		}

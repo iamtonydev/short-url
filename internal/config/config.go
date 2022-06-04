@@ -17,7 +17,6 @@ type Database struct {
 	Password string `yaml:"password"`
 	Name     string `yaml:"database"`
 	SslMode  string `yaml:"sslmode"`
-	Driver   string `yaml:"driver"`
 }
 
 type Http struct {
@@ -40,7 +39,7 @@ func Read(path string) (*Config, error) {
 	defer file.Close()
 
 	decoder := yaml.NewDecoder(file)
-	if err := decoder.Decode(&config); err != nil {
+	if err = decoder.Decode(&config); err != nil {
 		return nil, err
 	}
 

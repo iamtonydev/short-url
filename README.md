@@ -1,35 +1,51 @@
-### Run:
+Сервис для сокращения ссылок.
+
+Принимает на вход обычную ссылку, возвращает сокращенную.
+Также по сокращенной ссылке возвращает первоначальную.
+
+### Локальный запуск:
 
 * `git clone https://github.com/iamtonydev/url-shortener.git`
-* `docker-compose build`
 * `docker-compose up -d`
 
-### Api:
+При запуске создается 3 docker-контейнера. Для базы данных(postgres), приложения
+и промежуточный контейнер для применения миграций.
 
-Shorten url
-    
-* url **POST** `http://localhost:8000/urls/v1/add`
-* data example 
+### API:
+
+**Методя для сокращения ссылки:**
+
+* **POST** `{base_url}/urls/v1/add`
+
+В теле запроса необходимо передать url. Пример:
+ 
 ```
 {
     "url": "https://github.com/iamtonydev/url-shortener"
 }
 ```
-* response
 
+В ответе будет сокращенная ссылка через домен приложения.
+Пример:
 ```
 {
     "result": {
-        "short_url": "2txt3zUSuf"
+        "short_url": "{base_url}/2txt3zUSuf"
     }
 }
 ```
 
-Get url
+**Метод для получения полной(первоначальной) ссылки**
 
-* url **GET** `http://localhost:8000/`
-* request example `http://localhost:8000/2txt3zUSuf`
-* response 
+* **GET** `http://localhost:8000/`
+
+Необходимо отправить `GET` запрос на url, который возвращается
+при создании сокращенной ссылки. Пример:
+
+* `http: {base_url}/2txt3zUSuf`
+
+В теле отвечат будет содержаться первоначальная ссылка:
+
 ```
 {
     "result": {
