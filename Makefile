@@ -29,3 +29,10 @@ PHONY: .vendor-proto
 			mv vendor.protogen/protoc-gen-validate/validate/*.proto vendor.protogen/validate &&\
 			rm -rf vendor.protogen/protoc-gen-validate ;\
 		fi
+
+PHONY: run-migrations
+run-migrations: .run-migrations
+
+PHONY: .run-migrations
+.run-migrations:
+	sh ./migration.local.sh

@@ -6,7 +6,7 @@ volumes:
 
 services:
   postgres:
-    image: postgres:14-alpine3.15
+    build: ./third_party/docker_files/postgres
     environment:
       POSTGRES_DB: "url_shortener"
       POSTGRES_USER: "postgres"
@@ -14,5 +14,13 @@ services:
       PGDATA: "/var/lib/postgresql/data/pgdata"
     volumes:
       - postgres_volume:/var/lib/postgresql/data
+
+  app:
+    build: .
     ports:
-      - "54321:5432"
+      - "50051:50051"
+      - "8000:8000"
+    depends_on:
+      - postgres
+    links:
+      - postgres

@@ -5,8 +5,8 @@ http:
   port: ":8000"
 
 database :
-  host: "localhost"
-  port : "54321"
+  host: "postgres"
+  port : "5432"
   user : "postgres"
   password : "postgres"
   database : "url_shortener"
